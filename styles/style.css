@@ -1,0 +1,35 @@
+.header-top-right-logout-butt {
+
+}
+
+.header-top-right-download-butt {
+
+}
+
+h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
+
+.content-header {
+    display: flex;
+    align-items: center;
+}
+
+.content-header-top-right-form {
+
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+body {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.content-footer {
+    position: absolute;
+    bottom: 0;
+    margin: 0 50%;
+}
