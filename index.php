@@ -46,6 +46,9 @@ if (!SessionManager::isLoggedIn()) {
     if (isset($_POST['logoutButt'])) {
         SessionManager::logout();
     }
+    
+    
+
     ?>
 </body>
 

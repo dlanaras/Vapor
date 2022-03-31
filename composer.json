@@ -1,0 +1,9 @@
+{
+    "name": "sorry4nothing/vapor",
+    "description": "Vapor is deffinetly not a steam clone",
+    "type": "project",
+    "license": "版權所有 © 2007 自由軟體基金會",
+    "require": {
+        "phpunit/phpunit": "^9.5.19"
+    }
+}
