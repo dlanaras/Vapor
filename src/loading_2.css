@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+
+}
+.row{
+    display: flex;
+    justify-content: center;
+}
+.loading{
+    position: absolute;
+    height: 10rem;
+    width: 10rem;
+    border: 2rem solid rgba(80, 80, 80, 0.53);
+    border-top: 2rem solid rgba(136, 136, 136, 0.53);
+    border-radius: 50%;
+    animation: ani1 5s infinite;
+}
+@keyframes ani1 {
+    0%{
+        transform: rotate(0deg);
+    }
+    50%{
+        transform: rotate(360deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}
