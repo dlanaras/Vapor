@@ -1,5 +1,5 @@
 <?php
-include_once "./SessionManager.php";
+include_once "../classes/SessionManager.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,12 +7,13 @@ include_once "./SessionManager.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./carsten.jpg">
     <title>Document</title>
 </head>
 <body>
 
+
 <?php
+    //echo SessionManager::isLoggedIn();
     if(SessionManager::isLoggedIn()) {
         SessionManager::redir("./index.php");
     }
@@ -37,12 +38,11 @@ include_once "./SessionManager.php";
 <?php
             $dbUser = htmlspecialchars($_POST['dbuser']);
             $dbPassword = htmlspecialchars($_POST['password']);
-
-    
-            if (isset($dbUser, $dbPassword) && $dbUser !== "" && $dbPassword !== "") {
+            
+            if (!empty($dbUser) && !empty($dbPassword)) {
                 $passwordHash = hash('sha512', $dbPassword);
-
                 if(isset($_POST['wantLogin'])){
+
                     SessionManager::login($dbUser, $passwordHash);
                     SessionManager::redir("./index.php");
                 }
@@ -51,6 +51,5 @@ include_once "./SessionManager.php";
                     SessionManager::redir("./index.php");
                 }
             }
-
 ?>
 </body>

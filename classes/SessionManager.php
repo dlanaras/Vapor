@@ -1,5 +1,5 @@
 <?php
-include_once("./DbConnector.php");
+include_once("DbConnHandler.php");
 session_start();
 
 class SessionManager {
@@ -22,26 +22,26 @@ class SessionManager {
 
     static function login($name, $hashedPass) {
         $db = DbConnHandler::getConnection();
+
             $stmt = $db->prepare("SELECT user, password FROM usertest WHERE user = :name AND password = :pass");
             $stmt->bindValue(":name", $name);
             $stmt->bindValue(":pass", $hashedPass);
+
             try {
                 $stmt->execute();
                 $stmt->bindColumn('user', $userName);
                 $stmt->bindColumn('password', $userPass);
-                echo $userName . $userPass . "TEST";
+                
+                while($stmt->fetch(PDO::FETCH_BOUND)) {
 
-                    while($stmt->fetch(PDO::FETCH_BOUND)) {
-                        if($name === $userName && $hashedPass === $userPass) {
-
-                            $_SESSION["username"] = $name;
-                            $_SESSION["id"] = $hashedPass;
-                            return true;
+                        if($name == $userName && $hashedPass == $userPass) {
+                            $_SESSION["username"] = $userName;
+                            $_SESSION["id"] = $userPass;
+                            break;
                         }
                     }
                 } catch(Exception $e) {
                     echo $e;
-                    return false;
                 }
     }
 
@@ -76,6 +76,7 @@ class SessionManager {
     }
 
     static function redir($url) {
+        echo "<script>window.location.href = '$url';</script>";
         header("location: $url");
         die;
     }

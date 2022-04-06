@@ -1,5 +1,5 @@
 <?php
-require_once("SessionManager.php");
+require_once("../classes/SessionManager.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +8,7 @@ require_once("SessionManager.php");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./carsten.jpg">
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="../styles/style.css" />
     <title>Document</title>
 </head>
 <?php
@@ -24,7 +23,7 @@ if (!SessionManager::isLoggedIn()) {
             <h1>Vapor</h1>
             <div class="flex-grow"></div>
             <form action="./index.php" method="post" class="content-header-top-right-form">
-                <button type="button" onclick="window.location = 'https://github.com/Sorry4Nothing/Vapor'">Download</button>
+                <button type="button" onclick="window.location = 'https://github.com/Sorry4Nothing/Vapor/releases'">Download</button>
                 <input type="submit" name="logoutButt" value="Logout" class="header-top-right-logout-butt">
             </form>
         </div>
