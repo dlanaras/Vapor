@@ -1,6 +1,7 @@
 <?php
 include_once "../classes/SessionManager.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,16 +20,22 @@ include_once "../classes/SessionManager.php";
     }
 ?>
 
-<form action="./login.php" method="post">
+<form action="./register.php" method="post">
+            Firstname
+            <input type="text" name="firstName" required>
+            Lastname
+            <input type="text" name="lastName" required>
+            E-Mail
+            <input type="email" name="email" required>
             Username
-            <input type="text" name="dbuser" >
+            <input type="text" name="dbuser" required>
             Password
-            <input type="password" name="password" >
-        <input type="submit">
+            <input type="password" name="password" required>
+        <input type="submit" >
 </form>
 
-<button onclick="window.location = './register.php'">
-    Escape
+<button onclick="window.location = './login.php'">
+    Break Free of the cycle
 </button>
 
 <?php
@@ -36,7 +43,7 @@ include_once "../classes/SessionManager.php";
     $dbPassword = htmlspecialchars($_POST['password']);
     
     if (!empty($dbUser) && !empty($dbPassword)) {
-        SessionManager::login($dbUser, $dbPassword);
+        SessionManager::register($dbUser, $dbPassword);
         SessionManager::redir("./index.php");
     }
 ?>

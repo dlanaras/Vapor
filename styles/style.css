@@ -34,7 +34,7 @@ body {
     margin: 0 50%;
 }
 
-* {
+html {
     background-image: url("../resources/gaben.jpg");
     background-size: cover;
 }

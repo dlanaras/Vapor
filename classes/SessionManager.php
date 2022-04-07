@@ -10,9 +10,7 @@ class SessionManager {
         $stmt->bindValue(":name", $name);
         $stmt->bindValue(":pass", $hashedPass);
         try {
-            echo $name . $hashedPass;
             $stmt->execute();
-
             $_SESSION["username"] = $name;
         } catch(Exception $e) {
             echo $e;
