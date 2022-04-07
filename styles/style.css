@@ -33,3 +33,8 @@ body {
     bottom: 0;
     margin: 0 50%;
 }
+
+* {
+    background-image: url("../resources/gaben.jpg");
+    background-size: cover;
+}

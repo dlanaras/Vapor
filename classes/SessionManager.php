@@ -3,8 +3,8 @@ include_once("DbConnHandler.php");
 session_start();
 
 class SessionManager {
-    static function register($name, $hashedPass) {
-
+    static function register($name, $pass) {
+        $hashedPass = password_hash($pass, PASSWORD_ARGON2I, ['memory_cost' => 1024, 'time_cost' => 2, 'threads' => 2]);
         $db = DbConnHandler::getConnection();
         $stmt = $db->prepare("INSERT INTO usertest(user, password) VALUES(:name, :pass)");
         $stmt->bindValue(":name", $name);
@@ -14,29 +14,25 @@ class SessionManager {
             $stmt->execute();
 
             $_SESSION["username"] = $name;
-            $_SESSION["id"] = $hashedPass;
         } catch(Exception $e) {
             echo $e;
         }
     }
 
-    static function login($name, $hashedPass) {
+    static function login($name, $pass) {
         $db = DbConnHandler::getConnection();
-
-            $stmt = $db->prepare("SELECT user, password FROM usertest WHERE user = :name AND password = :pass");
+            $stmt = $db->prepare("SELECT user, password FROM usertest WHERE user = :name");
             $stmt->bindValue(":name", $name);
-            $stmt->bindValue(":pass", $hashedPass);
 
             try {
                 $stmt->execute();
                 $stmt->bindColumn('user', $userName);
                 $stmt->bindColumn('password', $userPass);
-                
+
                 while($stmt->fetch(PDO::FETCH_BOUND)) {
 
-                        if($name == $userName && $hashedPass == $userPass) {
+                        if($name === $userName && password_verify($pass, $userPass)) {
                             $_SESSION["username"] = $userName;
-                            $_SESSION["id"] = $userPass;
                             break;
                         }
                     }
@@ -46,27 +42,26 @@ class SessionManager {
     }
 
     static function isLoggedIn() : bool {
-        if(isset($_SESSION["username"], $_SESSION["id"]) && $_SESSION["username"] !== "" && $_SESSION["id"] !== "") {
+
+        if(isset($_SESSION["username"]) && $_SESSION["username"] !== "") {
             $db = DbConnHandler::getConnection();
-            $stmt = $db->prepare("SELECT user, password FROM usertest WHERE user = :name AND password = :pass");
+            $stmt = $db->prepare("SELECT user FROM usertest WHERE user = :name");
             $stmt->bindValue(":name", $_SESSION["username"]);
-            $stmt->bindValue(":pass", $_SESSION["id"]);
             try {
+
                 $stmt->execute();
                 $stmt->bindColumn('user', $userName);
-                $stmt->bindColumn('password', $userPass);
-
-                    while($stmt->fetch(PDO::FETCH_BOUND)) {
-                        if($_SESSION["username"] === $userName && $_SESSION["id"] === $userPass) {
-                            return true;
-                        }
-                    }
-                } catch(Exception $e) {
-                    echo $e;
-                    return false;
+                
+                while($stmt->fetch(PDO::FETCH_BOUND)) {
+                    return $userName === $_SESSION["username"];
                 }
+
+            } catch(Exception $e) {
+                echo $e;
+                return false;
+            }
         }
-        return false;
+        return false;   
     }
 
     static function logout() {
