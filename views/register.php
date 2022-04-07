@@ -41,9 +41,12 @@ include_once "../classes/SessionManager.php";
 <?php
     $dbUser = htmlspecialchars($_POST['dbuser']);
     $dbPassword = htmlspecialchars($_POST['password']);
+    $dbFirstName = htmlspecialchars($_POST['firstName']);
+    $dbLastName = htmlspecialchars($_POST['lastName']);
+    $dbEmail = htmlspecialchars($_POST['email']);
     
     if (!empty($dbUser) && !empty($dbPassword)) {
-        SessionManager::register($dbUser, $dbPassword);
+        SessionManager::register($dbUser, $dbPassword, $dbFirstName, $dbLastName, $dbEmail);
         SessionManager::redir("./index.php");
     }
 ?>

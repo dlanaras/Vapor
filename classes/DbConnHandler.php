@@ -3,7 +3,7 @@ class DbConnHandler {
     static function getConnection() {
 
         $dbHost = "localhost";
-        $dbName = "mydb";
+        $dbName = "DB_Vapor";
         $dbUser = "pma";
         $dbPass = "pmapass";
 
