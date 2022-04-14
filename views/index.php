@@ -19,40 +19,16 @@ if (!SessionManager::isLoggedIn()) {
 
 <body>
     <div class="content">
-        <div class="content-header">
-            <h1>Vapor</h1>
-            <div class="flex-grow"></div>
-            <form action="./index.php" method="post" class="content-header-top-right-form">
-                <button type="button" onclick="download()">Download</button>
-                <input type="submit" name="logoutButt" value="Logout" class="header-top-right-logout-butt">
-            </form>
-            <script>
-                function download() {
-                    window.open('https://github.com/Sorry4Nothing/Vapor/releases', '_blank');
-                }
-            </script>
-        </div>
+        <?php require_once("../templates/header.php") ?>
         <div class="content-body">
-
         </div>
-        <div class="content-footer">
-            <table>
-                <tr>
-                    <td>
-                        <a href="./index.php">Enter Links Here</a>
-                    </td>
-                </tr>
-            </table>
-        </div>
+        <?php require_once("../templates/footer.php") ?>
     </div>
 
     <?php
     if (isset($_POST['logoutButt'])) {
         SessionManager::logout();
     }
-    
-    
-
     ?>
 </body>
 

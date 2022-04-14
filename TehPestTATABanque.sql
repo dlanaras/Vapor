@@ -24,12 +24,14 @@ DROP TABLE IF EXISTS `DB_Vapor`.`account_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`account_tbl` (
   `idaccount_tbl` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NULL,
-  `password` VARCHAR(200) NULL,
-  `isAdmin` TINYINT NULL,
-  `firstName` VARCHAR(45) NULL,
-  `lastName` VARCHAR(45) NULL,
-  `Email` VARCHAR(45) NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
+  `isAdmin` TINYINT NOT NULL,
+  `firstName` VARCHAR(45) NOT NULL,
+  `lastName` VARCHAR(45) NOT NULL,
+  `Email` VARCHAR(45) NOT NULL,
+  `isBanned` TINYINT(1) NOT NULL,
+  `biography` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`idaccount_tbl`),
   UNIQUE(`username`))
 ENGINE = InnoDB;
@@ -42,8 +44,12 @@ DROP TABLE IF EXISTS `DB_Vapor`.`game_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`game_tbl` (
   `idgame_tbl` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
-  `price` FLOAT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `price` FLOAT NOT NULL,
+  `thumbnail` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(500) NOT NULL,
+  `releaseDate` DATE NOT NULL,
+  `isDisabled` TINYINT NOT NULL,
   PRIMARY KEY (`idgame_tbl`))
 ENGINE = InnoDB;
 
@@ -55,7 +61,9 @@ DROP TABLE IF EXISTS `DB_Vapor`.`Achievement_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`Achievement_tbl` (
   `idAchievment_tbl` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
+  `thumbnail` VARCHAR(45) NOT NULL,
   `game_tbl_idgame_tbl` INT NOT NULL,
   PRIMARY KEY (`idAchievment_tbl`),
   INDEX `fk_Achievment_tbl_game_tbl_idx` (`game_tbl_idgame_tbl` ASC) VISIBLE,
