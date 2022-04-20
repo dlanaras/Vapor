@@ -38,3 +38,8 @@ html {
     background-image: url("../resources/gaben.jpg");
     background-size: cover;
 }
+
+.pageSelected {
+    color: red;
+    background-color: #838282;
+}

@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `DB_Vapor`.`Achievement_tbl` (
   `description` VARCHAR(255) NOT NULL,
   `thumbnail` VARCHAR(45) NOT NULL,
   `game_tbl_idgame_tbl` INT NOT NULL,
+  `isDisabled` TINYINT NOT NULL,
   PRIMARY KEY (`idAchievment_tbl`),
   INDEX `fk_Achievment_tbl_game_tbl_idx` (`game_tbl_idgame_tbl` ASC) VISIBLE,
   CONSTRAINT `fk_Achievment_tbl_game_tbl`

@@ -22,16 +22,16 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
         <?php require_once("../templates/header.php") ?>
         <div class="content-body">
             <h1>Gods accounts</h1>
-            <form action="./accountsCRUD.php" method="post">
+            <form action="./accountsCRUD.php" method="get">
 
                 <?php
-                $banId = htmlspecialchars($_POST['banId']);
+                $banId = htmlspecialchars($_GET['banId']);
 
                 if (!empty($banId)) {
                     $accountRepository->disable($banId);
                 }
                 $accounts = $accountRepository->getAll();
-                $pageSize = htmlspecialchars($_POST['pageSize']);
+                $pageSize = htmlspecialchars($_GET['pageSize']);
                 if (empty($pageSize)) {
                     $pageSize = 10;
                 }
@@ -40,9 +40,10 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                 <?php
                 $pageSize = (int)$pageSize;
                 $pageAmount = count($accounts) % $pageSize == 0 ? count($accounts) / $pageSize : count($accounts) / $pageSize + 1;
+                $currentPage = empty(htmlspecialchars($_GET['currentPage'])) ? 0 : (int)htmlspecialchars($_GET['currentPage']);
                 for ($i = 0; $i < $pageAmount; $i++) {
                 ?>
-                    <button type="submit" name="currentPage" value="<?= $i ?>"><?= $i + 1 ?></button>
+                    <button type="submit" name="currentPage" value="<?= $i ?>" class="<?=empty($currentPage) && $currentPage == $i ? '' :  'pageSelected'?>"><?= $i + 1 ?></button>
                 <?php
                 }
                 ?>
@@ -60,9 +61,6 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                 </tr>
                 <?php
 
-
-
-                $currentPage = empty(htmlspecialchars($_POST['currentPage'])) ? 0 : (int)htmlspecialchars($_POST['currentPage']);
 
                 $accountsOnPage = array_slice($accounts, $currentPage == 0 ? 0 : $pageSize * $currentPage, $pageSize);
 

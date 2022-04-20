@@ -19,5 +19,9 @@ class Account {
         $this->email = $email;
         $this->isBanned = $isBanned;
     }
+
+
+    //kill pc
+    
 }
 ?>
