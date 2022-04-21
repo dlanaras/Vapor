@@ -2,7 +2,7 @@
     <table>
         <tr>
             <td>
-                <a href="./index.php">Enter Links Here</a>
+                <a href="/views/main/index.php">Enter Links Here</a>
             </td>
         </tr>
     </table>

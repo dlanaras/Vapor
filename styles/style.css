@@ -1,12 +1,13 @@
-.header-top-right-logout-butt {
+.header-top-right-logout-butt {}
 
-}
+.header-top-right-download-butt {}
 
-.header-top-right-download-butt {
-
-}
-
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     margin: 0;
 }
 
@@ -15,9 +16,7 @@ h1, h2, h3, h4, h5, h6{
     align-items: center;
 }
 
-.content-header-top-right-form {
-
-}
+.content-header-top-right-form {}
 
 .flex-grow {
     flex-grow: 1;
@@ -40,6 +39,70 @@ html {
 }
 
 .pageSelected {
-    color: red;
-    background-color: #838282;
+    color: white;
+    background-color: rgb(36, 33, 33);
+}
+
+.godsTable {
+    border-color: #545b5e;
+    border-collapse: collapse;
+    background: white;
+    background-color: white;
+    background-image: none;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    background-color: rgb(24, 26, 27);
+}
+
+.godsTable * {
+    position: relative;
+}
+
+.godsTable tbody tr {
+    color: rgb(179, 176, 171);
+    font-family: OpenSans-Regular;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: unset;
+    text-align: center;
+}
+
+.godsTable tbody tr:nth-child(2n) {
+    background-color: rgb(30, 32, 33);
+}
+
+.godsTable tbody tr button {
+    background-color: #2b263b;
+    color: rgb(179, 176, 171);
+    border : black 2px solid;
+}
+
+.godsTable tbody th {
+    background-color: #3f3466;
+}
+
+.homeLink {
+    text-decoration: none;
+    color: black;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex-column label p {
+    margin-right: 5%;
+}
+
+.centerAddAccount {
+    margin-top: 1.5%;
+    position: absolute;
+    left: 48%;
+    background-color: #2b263b;
+    color: rgb(179, 176, 171);
+    border : black 2px solid;
 }

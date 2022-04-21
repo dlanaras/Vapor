@@ -19,7 +19,6 @@
                 1: You made quite a few bad life decision<br>
                 2: God hasn't deemed your soul worthy
             </dd>
-             
             <dt>
                 Q: Why are you here?
             </dt>

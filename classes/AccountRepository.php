@@ -1,7 +1,11 @@
 <?php
+
+use phpDocumentor\Reflection\Types\Boolean;
+
 require_once("DbConnHandler.php");
 require_once("Repository.php");
-require_once("../models/Account.class.php");
+require_once("../../models/Account.class.php");
+require_once("SessionManager.php");
 
 class AccountRepository implements RepositoryInterface
 {
@@ -20,7 +24,7 @@ class AccountRepository implements RepositoryInterface
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $accounts = [];
         foreach ($result as $row) {
-            $account = new Account($row["idaccount_tbl"], $row["username"], $row["firstName"], $row["lastName"], $row["isAdmin"], $row["biography"], $row["Email"], $row["isBanned"]);
+            $account = new Account($row["password"], $row["idaccount_tbl"], $row["username"], $row["firstName"], $row["lastName"], $row["isAdmin"], $row["biography"], $row["Email"], $row["isBanned"]);
             $accounts[] = $account;
         }
         return $accounts;
@@ -33,20 +37,33 @@ class AccountRepository implements RepositoryInterface
         $stmt->bindValue(":accountId", $accountId);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $account = new Account($result['idaccount_tbl'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
+        $account = new Account($result["password"], $result['idaccount_tbl'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
+
+        return $account;
+    }
+
+    public function getByUserName($userName) {
+        $sql = "SELECT * FROM account_tbl WHERE username = :username";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":username", $userName);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $account = new Account($result["password"], $result['idaccount_tbl'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
 
         return $account;
     }
 
     public function add($account)
     {
-        $sql = "INSERT INTO account_tbl (username, firstName, lastName, isAdmin, Email, biography) VALUES (:username, :firstName, :lastName, :isAdmin, :email, '')";
+        $hashedPass = password_hash($account->password, PASSWORD_ARGON2I, ['memory_cost' => 1024, 'time_cost' => 2, 'threads' => 2]);
+        $sql = "INSERT INTO account_tbl (password, username, firstName, lastName, isAdmin, Email, biography, isBanned) VALUES (:password, :username, :firstName, :lastName, :isAdmin, :email, '', false)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":username", $account->username);
+        $stmt->bindValue(":username", $account->userName);
         $stmt->bindValue(":firstName", $account->firstName);
         $stmt->bindValue(":lastName", $account->lastName);
         $stmt->bindValue(":email", $account->email);
-        $stmt->bindValue(":isAdmin", $account->isAdmin);
+        $stmt->bindValue(":isAdmin", (Int) $account->isAdmin);
+        $stmt->bindValue(":password", $hashedPass);
         try {
             $stmt->execute();
         } catch (Exception $e) {
@@ -56,10 +73,11 @@ class AccountRepository implements RepositoryInterface
 
     public function update($account)
     {
-        $sql = "UPDATE account_tbl SET username = :username, firstName = :firstName, lastName = :lastName, biography = :biography WHERE idaccount_tbl = :accountId";
+        $sql = "UPDATE account_tbl SET username = :username, firstName = :firstName, lastName = :lastName, biography = :biography, Email = :email WHERE idaccount_tbl = :accountId";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":username", $account->username);
         $stmt->bindValue(":firstName", $account->firstName);
+        $stmt->bindValue(":email", $account->email);
+        $stmt->bindValue(":username", $account->userName);
         $stmt->bindValue(":lastName", $account->lastName);
         $stmt->bindValue(":accountId", $account->accountId);
         $stmt->bindValue(":biography", $account->biography);
@@ -70,8 +88,25 @@ class AccountRepository implements RepositoryInterface
         }
     }
 
-    public function trySetAdmin($accountId) {
-        if($this->isAdmin()) {
+    public function updateWithPassword($account) {
+        $hashedPass = password_hash($account->password, PASSWORD_ARGON2I, ['memory_cost' => 1024, 'time_cost' => 2, 'threads' => 2]);
+        $sql = "UPDATE account_tbl SET username = :username, firstName = :firstName, lastName = :lastName, biography = :biography, Email = :email, password = :password WHERE idaccount_tbl = :accountId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":firstName", $account->firstName);
+        $stmt->bindValue(":email", $account->email);
+        $stmt->bindValue(":username", $account->userName);
+        $stmt->bindValue(":lastName", $account->lastName);
+        $stmt->bindValue(":accountId", $account->accountId);
+        $stmt->bindValue(":biography", $account->biography);
+        $stmt->bindValue(":password", $hashedPass);
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function setAdmin($accountId) {
             $sql = "UPDATE account_tbl SET isAdmin = 1 WHERE idaccount_tbl = :accountId";
             $stmt = $this->db->prepare($sql);
             $stmt->bindValue(":accountId", $accountId);
@@ -80,28 +115,6 @@ class AccountRepository implements RepositoryInterface
             } catch (Exception $e) {
                 echo $e;
             }
-        }
-    }
-
-    public function isAdmin() : bool {
-        if(isset($_SESSION["username"]) && $_SESSION["username"] !== "") {
-            $stmt = $this->db->prepare("SELECT isAdmin FROM account_tbl WHERE username = :name");
-            $stmt->bindValue(":name", $_SESSION["username"]);
-            try {
-
-                $stmt->execute();
-                $stmt->bindColumn('isAdmin', $isAdmin);
-                
-                while($stmt->fetch(PDO::FETCH_BOUND)) {
-                    return $isAdmin;
-                }
-
-            } catch(Exception $e) {
-                echo $e;
-                return false;
-            }
-        }
-        return false;
     }
 
     public function disable($accountId) { //We are really against cheaters, so every ban is not reversable.
@@ -129,5 +142,3 @@ class AccountRepository implements RepositoryInterface
         }
     }
 }
-
-?>

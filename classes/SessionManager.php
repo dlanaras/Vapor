@@ -88,5 +88,30 @@ class SessionManager {
     static function isInCrud() : bool {    
         return str_contains(strtolower($_SERVER['REQUEST_URI']), "crud");
     }
+
+    static function isAwayFromHome() : bool {
+        return !str_contains(strtolower($_SERVER['REQUEST_URI']), "index");
+    }
+
+    static function isAdmin() : bool {
+        if(isset($_SESSION["username"]) && $_SESSION["username"] !== "") {
+            $db = DbConnHandler::getConnection();
+            $stmt = $db->prepare("SELECT isAdmin FROM account_tbl WHERE username = :name");
+            $stmt->bindValue(":name", $_SESSION["username"]);
+            try {
+
+                $stmt->execute();
+                $stmt->bindColumn('isAdmin', $isAdmin);
+                
+                while($stmt->fetch(PDO::FETCH_BOUND)) {
+                    return $isAdmin;
+                }
+            } catch(Exception $e) {
+                echo $e;
+                return false;
+            }
+        }
+        return false;
+    }
 }
 ?>

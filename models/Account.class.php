@@ -8,8 +8,10 @@ class Account {
     public $isAdmin;
     public $biography;
     public $isBanned;
+    public $password;
 
-    public function __construct($accountId, $userName, $firstName, $lastName, $isAdmin, $biography, $email, $isBanned) {
+    public function __construct($password, $accountId, $userName, $firstName, $lastName, $isAdmin, $biography, $email, $isBanned) {
+        $this->password = $password;
         $this->accountId = $accountId;
         $this->userName = $userName;
         $this->firstName = $firstName;
@@ -19,9 +21,5 @@ class Account {
         $this->email = $email;
         $this->isBanned = $isBanned;
     }
-
-
-    //kill pc
-    
 }
 ?>

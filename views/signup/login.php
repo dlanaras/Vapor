@@ -1,5 +1,5 @@
 <?php
-include_once "../classes/SessionManager.php";
+require_once "../../classes/SessionManager.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +13,8 @@ include_once "../classes/SessionManager.php";
 
 
 <?php
-    //echo SessionManager::isLoggedIn();
     if(SessionManager::isLoggedIn()) {
-        SessionManager::redir("./index.php");
+        SessionManager::redir("../main/index.php");
     }
 ?>
 
@@ -37,7 +36,7 @@ include_once "../classes/SessionManager.php";
     
     if (!empty($dbUser) && !empty($dbPassword)) {
         SessionManager::login($dbUser, $dbPassword);
-        SessionManager::redir("./index.php");
+        SessionManager::redir("../main/index.php");
     }
 ?>
 </body>
