@@ -29,6 +29,9 @@ require_once "../../classes/SessionManager.php";
 <button onclick="window.location = './register.php'">
     Escape
 </button>
+<button onclick="window.location = './reset.php'">
+    Forgor?
+</button>
 
 <?php
     $dbUser = htmlspecialchars($_POST['dbuser']);

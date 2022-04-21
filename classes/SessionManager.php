@@ -113,5 +113,32 @@ class SessionManager {
         }
         return false;
     }
+
+
+
+    static function resetPassword($email) {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array();
+        $alphaLength = strlen($alphabet) - 1;
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        $pass = implode($pass);
+
+        $password = password_hash($pass, PASSWORD_ARGON2I, ['memory_cost' => 1024, 'time_cost' => 2, 'threads' => 2]);
+
+        $db = DbConnHandler::getConnection();
+        $stmt = $db->prepare("UPDATE account_tbl SET password = :password WHERE Email = :email");
+        $stmt->bindValue(":password", $password);
+        $stmt->bindValue(":email", $email);
+
+        try {
+            $stmt->execute();
+            mail($email, "Reset Password Vapor", "Use this password to login and then we strongly recommend you change it $pass");
+        } catch(Exception $e) {
+            echo $e;
+        }
+    }
 }
 ?>

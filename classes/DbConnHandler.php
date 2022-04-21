@@ -1,11 +1,13 @@
 <?php
+
 class DbConnHandler {
     static function getConnection() {
+        $configArray = require "../../config.php";
 
-        $dbHost = "localhost";
-        $dbName = "DB_Vapor";
-        $dbUser = "pma";
-        $dbPass = "pmapass";
+        $dbHost = $configArray['host'];
+        $dbName = $configArray['name'];
+        $dbUser = $configArray['username'];
+        $dbPass = $configArray['pass'];
 
         try {
             $db = new PDO("mysql:host=$dbHost;dbname=$dbName", "$dbUser", "$dbPass", [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
