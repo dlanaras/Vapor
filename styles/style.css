@@ -106,3 +106,8 @@ html {
     color: rgb(179, 176, 171);
     border : black 2px solid;
 }
+
+.formSeperateMiddle {
+    display: flex;
+    justify-content: space-between;
+}

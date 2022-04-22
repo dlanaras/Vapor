@@ -1,7 +1,7 @@
 <?php
 require_once("DbConnHandler.php");
 require_once("Repository.php");
-require_once("../models/Game.class.php");
+require_once("../../models/Game.class.php");
 
 class GameRepository implements RepositoryInterface
 {
@@ -12,7 +12,7 @@ class GameRepository implements RepositoryInterface
         $this->db = DbConnHandler::getConnection();
     }
 
-    public function getAll() : array
+    public function getAll(): array
     {
         $sql = "SELECT * FROM game_tbl";
         $stmt = $this->db->prepare($sql);
@@ -20,7 +20,7 @@ class GameRepository implements RepositoryInterface
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $games = [];
         foreach ($result as $row) {
-            $game = new Game($row["idgame_tbl"], $row["name"], $row["description"], $row["price"], $row["releaseDate"], $row["isActive"], $row["isDisabled"]);
+            $game = new Game($row["id"], $row["name"], $row["description"], $row["price"], $row["releaseDate"], $row["isActive"], $row["isDisabled"], $row["downloadLink"]);
             $games[] = $game;
         }
         return $games;
@@ -28,20 +28,26 @@ class GameRepository implements RepositoryInterface
 
     public function getById($gameId)
     {
-
     }
 
     public function add($game)
     {
-
     }
 
     public function update($game)
     {
-
     }
 
-    public function disable($gameId) { 
+    public function disable($gameId)
+    {
+    }
 
+    public function getAchievements($gameId)
+    {
+    }
+
+    public function addGameToAccount($gameId, $accountId)
+    {
+        //insert into gamesPerAccount
     }
 }

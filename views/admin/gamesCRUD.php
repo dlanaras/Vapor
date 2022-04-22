@@ -18,9 +18,9 @@ require_once("../../templates/mustBeAdmin.php");
 <body>
     <?php require_once("../../templates/header.php") ?>
     <div class="content-body">
-
+        <?php
+            //TODO: only allow adding achievements here since a gameId is required to create an achievement
+        ?>
     </div>
     <?php require_once("../../templates/footer.php") ?>
 </body>
-
-</html><a href="./achievementsCRUD.php"></a>

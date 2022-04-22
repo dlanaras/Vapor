@@ -23,7 +23,7 @@ USE `DB_Vapor` ;
 DROP TABLE IF EXISTS `DB_Vapor`.`account_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`account_tbl` (
-  `idaccount_tbl` INT NOT NULL AUTO_INCREMENT,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(200) NOT NULL,
   `isAdmin` TINYINT NOT NULL,
@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS `DB_Vapor`.`account_tbl` (
   `Email` VARCHAR(45) NOT NULL,
   `isBanned` TINYINT(1) NOT NULL,
   `biography` VARCHAR(200) NOT NULL,
-  PRIMARY KEY (`idaccount_tbl`),
-  UNIQUE(`username`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`Id`),
+  UNIQUE(`username`));
+
 
 
 -- -----------------------------------------------------
@@ -43,37 +43,38 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `DB_Vapor`.`game_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`game_tbl` (
-  `idgame_tbl` INT NOT NULL AUTO_INCREMENT,
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `price` FLOAT NOT NULL,
   `thumbnail` VARCHAR(45) NOT NULL,
   `description` VARCHAR(500) NOT NULL,
   `releaseDate` DATE NOT NULL,
   `isDisabled` TINYINT NOT NULL,
-  PRIMARY KEY (`idgame_tbl`))
-ENGINE = InnoDB;
+  `downloadLInk` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`Id`));
+
 
 
 -- -----------------------------------------------------
--- Table `DB_Vapor`.`Achievement_tbl`
+-- Table `DB_Vapor`.`achievement_tbl`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `DB_Vapor`.`Achievement_tbl` ;
+DROP TABLE IF EXISTS `DB_Vapor`.`achievement_tbl` ;
 
-CREATE TABLE IF NOT EXISTS `DB_Vapor`.`Achievement_tbl` (
-  `idAchievment_tbl` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `DB_Vapor`.`achievement_tbl` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `thumbnail` VARCHAR(45) NOT NULL,
-  `game_tbl_idgame_tbl` INT NOT NULL,
+  `game_Id` INT NOT NULL,
   `isDisabled` TINYINT NOT NULL,
-  PRIMARY KEY (`idAchievment_tbl`),
-  INDEX `fk_Achievment_tbl_game_tbl_idx` (`game_tbl_idgame_tbl` ASC) VISIBLE,
-  CONSTRAINT `fk_Achievment_tbl_game_tbl`
-    FOREIGN KEY (`game_tbl_idgame_tbl`)
-    REFERENCES `DB_Vapor`.`game_tbl` (`idgame_tbl`)
+  PRIMARY KEY (`Id`),
+  INDEX `game_achievement_Id_Idx` (`game_Id` ASC) VISIBLE,
+  CONSTRAINT `game_achievement_Id_Idx`
+    FOREIGN KEY (`game_Id`)
+    REFERENCES `DB_Vapor`.`game_tbl` (`Id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
+
 
 
 -- -----------------------------------------------------
@@ -82,22 +83,22 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `DB_Vapor`.`achievementsPerAccount_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`achievementsPerAccount_tbl` (
-  `account_tbl_idaccount_tbl` INT NOT NULL,
-  `Achievment_tbl_idAchievment_tbl` INT NOT NULL,
-  PRIMARY KEY (`account_tbl_idaccount_tbl`, `Achievment_tbl_idAchievment_tbl`),
-  INDEX `fk_account_tbl_has_Achievment_tbl_Achievment_tbl1_idx` (`Achievment_tbl_idAchievment_tbl` ASC) VISIBLE,
-  INDEX `fk_account_tbl_has_Achievment_tbl_account_tbl1_idx` (`account_tbl_idaccount_tbl` ASC) VISIBLE,
-  CONSTRAINT `fk_account_tbl_has_Achievment_tbl_account_tbl1`
-    FOREIGN KEY (`account_tbl_idaccount_tbl`)
-    REFERENCES `DB_Vapor`.`account_tbl` (`idaccount_tbl`)
+  `account_Id` INT NOT NULL,
+  `achievement_Id` INT NOT NULL,
+  PRIMARY KEY (`account_Id`, `achievement_Id`),
+  INDEX `achievement_Id_Idx` (`achievement_Id` ASC) VISIBLE,
+  INDEX `account_achievement_Id_Idx` (`account_Id` ASC) VISIBLE,
+  CONSTRAINT `account_achievement_Id_Idx`
+    FOREIGN KEY (`account_Id`)
+    REFERENCES `DB_Vapor`.`account_tbl` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_account_tbl_has_Achievment_tbl_Achievment_tbl1`
-    FOREIGN KEY (`Achievment_tbl_idAchievment_tbl`)
-    REFERENCES `DB_Vapor`.`Achievement_tbl` (`idAchievment_tbl`)
+  CONSTRAINT `achievement_Id_Idx`
+    FOREIGN KEY (`achievement_Id`)
+    REFERENCES `DB_Vapor`.`achievement_tbl` (`Id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
+
 
 
 -- -----------------------------------------------------
@@ -106,22 +107,22 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `DB_Vapor`.`gamesPerAccount_tbl` ;
 
 CREATE TABLE IF NOT EXISTS `DB_Vapor`.`gamesPerAccount_tbl` (
-  `account_tbl_idaccount_tbl` INT NOT NULL,
-  `game_tbl_idgame_tbl` INT NOT NULL,
-  PRIMARY KEY (`account_tbl_idaccount_tbl`, `game_tbl_idgame_tbl`),
-  INDEX `fk_account_tbl_has_game_tbl_game_tbl1_idx` (`game_tbl_idgame_tbl` ASC) VISIBLE,
-  INDEX `fk_account_tbl_has_game_tbl_account_tbl1_idx` (`account_tbl_idaccount_tbl` ASC) VISIBLE,
-  CONSTRAINT `fk_account_tbl_has_game_tbl_account_tbl1`
-    FOREIGN KEY (`account_tbl_idaccount_tbl`)
-    REFERENCES `DB_Vapor`.`account_tbl` (`idaccount_tbl`)
+  `account_Id` INT NOT NULL,
+  `game_Id` INT NOT NULL,
+  PRIMARY KEY (`account_Id`, `game_Id`),
+  INDEX `game_game_Id_Idx` (`game_Id` ASC) VISIBLE,
+  INDEX `account_game_Id_Idx` (`account_Id` ASC) VISIBLE,
+  CONSTRAINT `account_game_Id_Idx`
+    FOREIGN KEY (`account_Id`)
+    REFERENCES `DB_Vapor`.`account_tbl` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_account_tbl_has_game_tbl_game_tbl1`
-    FOREIGN KEY (`game_tbl_idgame_tbl`)
-    REFERENCES `DB_Vapor`.`game_tbl` (`idgame_tbl`)
+  CONSTRAINT `game_game_Id_Idx`
+    FOREIGN KEY (`game_Id`)
+    REFERENCES `DB_Vapor`.`game_tbl` (`Id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION);
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

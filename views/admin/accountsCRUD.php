@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Types\Boolean;
+
 require_once("../../classes/SessionManager.php");
 require_once("../../classes/AccountRepository.php");
 require_once("../../classes/DbConnHandler.php");
@@ -24,52 +27,73 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
         <?php require_once("../../templates/header.php") ?>
         <div class="content-body">
             <h1>Gods accounts</h1>
-            <form action="./accountsCRUD.php" method="get">
+            <div class="formSeperateMiddle">
+                <form action="./accountsCRUD.php" method="get">
+                    <?php
+                    $banId = htmlspecialchars($_POST['banId']);
 
-                <?php
-                $banId = htmlspecialchars($_POST['banId']);
+                    if (!empty($banId)) {
+                        $accountRepository->disable($banId);
+                    }
 
-                if (!empty($banId)) {
-                    $accountRepository->disable($banId);
-                }
+                    $ascendId = htmlspecialchars($_POST['ascendId']);
 
-                $ascendId = htmlspecialchars($_POST['ascendId']);
+                    if (!empty($ascendId)) {
+                        $accountRepository->setAdmin($ascendId);
+                    }
 
-                if (!empty($ascendId)) {
-                    $accountRepository->setAdmin($ascendId);
-                }
+                    $dbUser = htmlspecialchars($_POST['dbuser']);
+                    $dbPassword = htmlspecialchars($_POST['password']);
+                    $dbFirstName = htmlspecialchars($_POST['firstName']);
+                    $dbLastName = htmlspecialchars($_POST['lastName']);
+                    $dbEmail = htmlspecialchars($_POST['email']);
+                    $dbIsAdmin = (Boolean) htmlspecialchars($_POST['isAdmin']);
 
-                $dbUser = htmlspecialchars($_POST['dbuser']);
-                $dbPassword = htmlspecialchars($_POST['password']);
-                $dbFirstName = htmlspecialchars($_POST['firstName']);
-                $dbLastName = htmlspecialchars($_POST['lastName']);
-                $dbEmail = htmlspecialchars($_POST['email']);
-                $dbIsAdmin = htmlspecialchars($_POST['isAdmin']);
+                    if (!empty($dbUser) && !empty($dbPassword) && strlen($dbPassword) > 2 && !empty($dbFirstName) && !empty($dbLastName) && !empty($dbEmail)) {
+                        $newAcc = new Account($dbPassword, 0, $dbUser, $dbFirstName, $dbLastName, $dbIsAdmin, "", $dbEmail, false);
+                        $accountRepository->add($newAcc);
+                    }
 
-                if (!empty($dbUser) && !empty($dbPassword) && strlen($dbPassword) > 3 && !empty($dbFirstName) && !empty($dbLastName) && !empty($dbEmail)) {
-                    $newAcc = new Account($dbPassword, 0, $dbUser, $dbFirstName, $dbLastName, $dbIsAdmin, "", $dbEmail, false);
-                    $accountRepository->add($newAcc);
-                }
+                    $accounts = $accountRepository->getAll();
 
-                $accounts = $accountRepository->getAll();
-                $pageSize = htmlspecialchars($_GET['pageSize']);
-                if (empty($pageSize)) {
-                    $pageSize = 10;
-                }
-                ?>
-                <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>">
-                <?php
-                $pageSize = (int)$pageSize;
-                $pageAmount = count($accounts) % $pageSize == 0 ? count($accounts) / $pageSize : floor(count($accounts) / $pageSize) + 1;
-                $currentPage = empty(htmlspecialchars($_GET['currentPage'])) ? 0 : (int)htmlspecialchars($_GET['currentPage']);
-                for ($i = 0; $i < $pageAmount; $i++) {
-                ?>
-                    <button type="submit" name="currentPage" value="<?= $i ?>" class="<?= $currentPage == $i ? 'pageSelected' : '' ?>"><?= $i + 1 ?></button>
-                <?php
-                }
-                ?>
-                <input type="submit">
-            </form>
+                    $searchTerm = htmlspecialchars($_GET['searchTerm']);
+                    if (!empty($searchTerm)) {
+                        foreach ($accounts as $account) {
+                            if(strtolower($account->userName) === strtolower($searchTerm)) {
+                                $accounts = array();
+                                $accounts = [$account];
+                                break;
+                            }
+                        }
+
+                        if(count($accounts) > 1) {
+                            echo "No Results found with search term $searchterm";
+                            echo "<button onclick='window.location=./accountsCRUD.php'>Reset</button>";
+                            die();
+                        }
+                    }
+
+                    $pageSize = htmlspecialchars($_GET['pageSize']);
+                    if (empty($pageSize)) {
+                        $pageSize = 10;
+                    }
+                    ?>
+                    <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>">
+                    <input type="submit" value="Change Page Size">
+                    <?php
+                    $pageSize = (int)$pageSize;
+                    $pageAmount = count($accounts) % $pageSize == 0 ? count($accounts) / $pageSize : floor(count($accounts) / $pageSize) + 1;
+                    $currentPage = empty(htmlspecialchars($_GET['currentPage'])) ? 0 : (int)htmlspecialchars($_GET['currentPage']);
+                    for ($i = 0; $i < $pageAmount; $i++) :
+                    ?>
+                        <button type="submit" name="currentPage" value="<?= $i ?>" class="<?= $currentPage == $i ? 'pageSelected' : '' ?>"><?= $i + 1 ?></button>
+                    <?php endfor ?>
+                </form>
+                <form action="./accountsCRUD.php" method="get">
+                    <input type="text" name="searchTerm" value="<?= is_null($searchTerm) ? "" : $searchTerm ?>">
+                    <input type="submit" value="Search By Name">
+                </form>
+            </div>
             <br>
             <table class="godsTable">
                 <tr>
@@ -83,8 +107,6 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                     <th></th>
                 </tr>
                 <?php
-
-
                 $accountsOnPage = array_slice($accounts, $currentPage == 0 ? 0 : $pageSize * $currentPage, $pageSize);
 
                 foreach ($accountsOnPage as $account) {
@@ -108,9 +130,9 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                             }
                             ?>
                         </td>
-                        <?php if($account->isAdmin == 1): ?>
+                        <?php if ($account->isAdmin == 1) : ?>
                             <td>true</td>
-                        <?php else: ?>
+                        <?php else : ?>
                             <td>false</td>
                             <td>
                                 <form action="./accountsCRUD.php" method="post">
@@ -153,7 +175,7 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                             <input type="password" name="password" required>
                         </td>
                         <td>
-                            <input type="checkbox">
+                            <input type="checkbox" name="isAdmin">
                         </td>
                     </tr>
                 </table>
