@@ -9,8 +9,11 @@ class Account {
     public $biography;
     public $isBanned;
     public $password;
+    public $games;
+    public $completedAchievements;
 
-    public function __construct($password, $accountId, $userName, $firstName, $lastName, $isAdmin, $biography, $email, $isBanned) {
+    public function __construct ($password, $accountId, $userName, $firstName, $lastName, $isAdmin, $biography, $email, $isBanned)
+    {
         $this->password = $password;
         $this->accountId = $accountId;
         $this->userName = $userName;

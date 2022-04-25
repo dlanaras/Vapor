@@ -15,6 +15,13 @@ class SessionManager {
         try {
             $stmt->execute();
             $_SESSION["username"] = $name;
+
+            $stmt = $db->prepare("SELECT Id FROM account_tbl WHERE username = :name");
+            $stmt->bindValue(":name", $name);
+            $stmt->execute();
+            $stmt->bindColumn("Id", $accountId);
+
+            $_SESSION["Id"] = $accountId;
         } catch(Exception $e) {
             echo $e;
         }
@@ -22,7 +29,7 @@ class SessionManager {
 
     static function login($name, $pass) {
         $db = DbConnHandler::getConnection();
-            $stmt = $db->prepare("SELECT username, password, isBanned FROM account_tbl WHERE username = :name");
+            $stmt = $db->prepare("SELECT Id, username, password, isBanned FROM account_tbl WHERE username = :name");
             $stmt->bindValue(":name", $name);
 
             try {
@@ -30,11 +37,9 @@ class SessionManager {
                 $stmt->bindColumn('username', $userName);
                 $stmt->bindColumn('password', $userPass);
                 $stmt->bindColumn('isBanned', $isBanned);
+                $stmt->bindColumn('Id', $accountId);
 
                 while($stmt->fetch(PDO::FETCH_BOUND)) {
-
-                        
-
                         if($name === $userName && password_verify($pass, $userPass)) {
 
                             if($isBanned) {
@@ -42,6 +47,7 @@ class SessionManager {
                             }
 
                             $_SESSION["username"] = $userName;
+                            $_SESSION["Id"] = $accountId;
                             break;
                         }
                     }

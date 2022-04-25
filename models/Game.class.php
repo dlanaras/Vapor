@@ -8,6 +8,7 @@ class Game {
     public $releaseDate;
     public $isDisabled;
     public $downloadLink;
+    public $achievements;
 
     public function __construct($gameId, $gameName, $price, $thumbnail, $description, $releaseDate, $isDisabled, $downloadLink) {
         $this->gameId = $gameId;

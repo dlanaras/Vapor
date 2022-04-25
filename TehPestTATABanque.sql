@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `DB_Vapor`.`game_tbl` (
   `description` VARCHAR(500) NOT NULL,
   `releaseDate` DATE NOT NULL,
   `isDisabled` TINYINT NOT NULL,
-  `downloadLInk` VARCHAR(200) NOT NULL,
+  `downloadLink` VARCHAR(200) NOT NULL,
   PRIMARY KEY (`Id`));
 
 
@@ -123,7 +123,14 @@ CREATE TABLE IF NOT EXISTS `DB_Vapor`.`gamesPerAccount_tbl` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+CREATE PROCEDURE GetAchievementsFromGame(In GameId Int)
+SELECT * FROM `achievement_tbl` WHERE `game_id` = GameId;
 
+CREATE PROCEDURE GetAchievementsFromAccount(In AccountId Int)
+SELECT `achievement_tbl`.* FROM `achievementsPerAccount_tbl` JOIN `achievement_tbl` ON `achievement_tbl`.`Id` = `achievementsPerAccount_tbl`.`achievement_Id` WHERE `achievementsPerAccount_tbl`.`account_Id` = AccountId;
+
+CREATE PROCEDURE GetGamesFromAccount(In AccountId Int)
+SELECT `game_tbl`.* FROM `gamesPerAccount_tbl` JOIN `game_tbl` ON `game_tbl`.`Id` = `gamesPerAccount_tbl`.`game_Id` WHERE `gamesPerAccount_tbl`.`account_Id` = AccountId;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

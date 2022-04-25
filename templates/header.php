@@ -16,6 +16,7 @@ $accountRepository = new AccountRepository();
         <button type="button" onclick="download()">Download</button>
         <button type="button" onclick="window.location = '../signup/logout.php';" class="header-top-right-logout-butt">Logout</button>
         <button type="button" onclick="window.location = '../main/accountSettings.php'">Edit Account</button>
+        <button type="button" onclick="window.location = '../main/library.php'">Library</button>
     </div>
     <script>
         function download() {

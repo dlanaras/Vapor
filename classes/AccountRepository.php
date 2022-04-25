@@ -18,7 +18,7 @@ class AccountRepository implements RepositoryInterface
 
     public function getAll(): array
     {
-        $sql = "SELECT * FROM account_tbl";
+        $sql = "SELECT password, Id, username, firstName, lastName, isAdmin, biography, Email, isBanned FROM account_tbl";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -32,12 +32,37 @@ class AccountRepository implements RepositoryInterface
 
     public function getById($accountId)
     {
-        $sql = "SELECT * FROM account_tbl WHERE Id = :accountId";
+        $sql = "SELECT * FROM account_tbl WHERE Id = :accountId;";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $account = new Account($result["password"], $result['account_tbl.Id'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
+
+        return $account;
+    }
+
+    public function getGamesWithAccountId($accountId)
+    {
+        $sql = "SELECT * FROM account_tbl WHERE Id = :accountId;";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":accountId", $accountId);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $account = new Account($result["password"], $result['Id'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
+
+        $sql = "CALL GetGamesFromAccount(:accountId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $games = [];
+        foreach ($result as $row) {
+            $game = new Game($row["Id"], $row["name"], $row["price"], $row["thumbnail"], $row["description"], $row["releaseDate"], $row["isDisabled"], $row["downloadLink"]);
+            $games[] = $game;
+        }
+
+        $account->games = $games;
 
         return $account;
     }
@@ -147,9 +172,70 @@ class AccountRepository implements RepositoryInterface
         }
     }
 
-    public function getCompletedAchievements() : array
+    public function addGameToAccountLibrary($gameId, $accountId)
     {
-        //TODO: implement this
-        return array();
+        $sql = "INSERT INTO gamesPerAccount_tbl (account_Id, game_Id) VALUES (:accountId, :gameId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->bindValue(":gameId", $gameId);
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function addAchievementToAccount($achievementId, $accountId)
+    {
+        $sql = "INSERT INTO achievementsPerAccount_tbl (account_Id, achievement_Id) VALUES (:accountId, :achievementId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->bindValue(":achievementId", $achievementId);
+        try {
+            $stmt->execute();
+        } catch (Exception $e) {
+            echo $e;
+        }
+    }
+
+    public function getCompletedAchievementsOfAccount($accountId): array
+    {
+        $sql = "CALL GetAchievementsFromAccount(:accountId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $achievements = [];
+        foreach ($result as $row) {
+            $achievement = new Achievement($row["Id"], $row["name"], $row["description"], $row["isDisabled"], $row["thumbnail"],  $row["game_Id"]);
+            $achievements[] = $achievement;
+        }
+
+        return $achievements;
+    }
+
+    public function isGameAddedToAccount($gameId, $accountId): bool
+    {
+        $sql = "SELECT account_Id, game_Id FROM gamesPerAccount_tbl WHERE account_Id = :accountId AND game_Id = :gameId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->bindValue(":gameId", $gameId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (!empty($result["account_Id"])) && (!empty($result["game_Id"]));
+    }
+
+    public function isAchievementAddedToAccount($achievementId, $accountId): bool
+    {
+        $sql = "SELECT account_Id, achievement_Id FROM achievementsPerAccount_tbl WHERE account_Id = :accountId AND achievement_Id = :achievementId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":accountId", $accountId);
+        $stmt->bindValue(":achievementId", $achievementId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return (!empty($result["account_Id"])) && (!empty($result["achievement_Id"]));
     }
 }

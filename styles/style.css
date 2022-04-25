@@ -1,3 +1,8 @@
+html,
+body {
+    height: 100%
+}
+
 .header-top-right-logout-butt {}
 
 .header-top-right-download-butt {}
@@ -76,7 +81,7 @@ html {
 .godsTable tbody tr button {
     background-color: #2b263b;
     color: rgb(179, 176, 171);
-    border : black 2px solid;
+    border: black 2px solid;
 }
 
 .godsTable tbody th {
@@ -104,10 +109,88 @@ html {
     left: 48%;
     background-color: #2b263b;
     color: rgb(179, 176, 171);
-    border : black 2px solid;
+    border: black 2px solid;
 }
 
 .formSeperateMiddle {
     display: flex;
     justify-content: space-between;
+}
+
+.library {
+    display: flex;
+    flex-direction: row;
+}
+
+.library form {
+    flex-direction: column;
+    width: 20%;
+    background-color: #3f3466;
+}
+
+.library form button {
+    width: 100%;
+    background-color: rgb(60, 45, 87);
+    padding: 2px;
+    border: 1px rgb(24, 26, 27) solid;
+    color: white;
+}
+
+.library > div {
+    width: 80%;
+    height: 900px;
+    background-color: #2b263b;
+    visibility: visible;
+}
+
+.selectedGame {
+    background-color: #655b88 !important;
+}
+
+.imageBotText {
+    position: relative;
+    top: -50px;
+    left: 16px;
+    font-size: xx-large;
+    color: #fff;
+}
+
+.flex-games {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.flex-games-element button {
+    position: relative;
+    left: 0;
+    top:0;
+}
+
+.reload-button {
+    bottom: 0;
+}
+
+.single-game-page {
+    display: flex;
+    flex-direction: column;
+    background-color: #2b263b;
+    align-items: center;
+}
+
+.single-game-page img {
+    position: absolute;
+}
+
+.single-game-page .single-game-page-rest {
+    margin-top: 45%;
+
+}
+
+.imageTopText {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-size: 70px;
 }

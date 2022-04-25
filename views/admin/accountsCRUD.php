@@ -1,7 +1,4 @@
 <?php
-
-use phpDocumentor\Reflection\Types\Boolean;
-
 require_once("../../classes/SessionManager.php");
 require_once("../../classes/AccountRepository.php");
 require_once("../../classes/DbConnHandler.php");
