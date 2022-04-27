@@ -104,4 +104,19 @@ class GameRepository implements RepositoryInterface
 
         return $achievements;
     }
+
+    public function getMapOfGameNamesAndIds()
+    {
+        $sql = "SELECT Id, name FROM game_tbl";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $gameNamesToIds = array();
+        foreach ($result as $row) {
+            $gameNamesToIds[$row["Id"]] = $row["name"];
+        }
+
+        return $gameNamesToIds;
+    }
 }

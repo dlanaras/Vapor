@@ -21,6 +21,8 @@ require_once("../../templates/mustBeAdmin.php");
             <a href="./gamesCRUD.php">Games O' Games</a>
             <br>
             <a href="./accountsCRUD.php">Oh The Humanity</a>
+            <br>
+            <a href="./achievementCRUD.php">Cannot Achieve This</a>
         </div>
         <?php require_once("../../templates/footer.php") ?>
     </div>

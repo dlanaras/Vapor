@@ -14,7 +14,7 @@ class AchievementRepository implements RepositoryInterface
 
     public function getAll(): array
     {
-        $sql = "SELECT * FROM Achievement_tbl";
+        $sql = "SELECT * FROM achievement_tbl";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ class AchievementRepository implements RepositoryInterface
 
     public function getAllAchievementsOfGame($gameId): array
     {
-        $sql = "SELECT * FROM Achievement_tbl WHERE game_Id = :gameId";
+        $sql = "SELECT * FROM achievement_tbl WHERE game_Id = :gameId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":gameId", $gameId);
         $stmt->execute();
@@ -43,7 +43,7 @@ class AchievementRepository implements RepositoryInterface
 
     public function getById($achievementId)
     {
-        $sql = "SELECT * FROM Achievement_tbl WHERE Id = :achievementId";
+        $sql = "SELECT * FROM achievement_tbl WHERE Id = :achievementId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":achievementId", $achievementId);
         $stmt->execute();
@@ -72,13 +72,14 @@ class AchievementRepository implements RepositoryInterface
 
     public function update($achievement)
     {
-        $sql = "UPDATE achievement_tbl SET name = :achievementName, description = :description, thumbnail = :thumbnail, game_Id = :gameId WHERE Id = :achievementId)";
+        $sql = "UPDATE achievement_tbl SET name = :achievementName, description = :description, thumbnail = :thumbnail, game_Id = :gameId, isDisabled = :isDisabled WHERE Id = :achievementId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":achievementName", $achievement->achievementName);
         $stmt->bindValue(":description", $achievement->description);
         $stmt->bindValue(":thumbnail", $achievement->thumbnail);
         $stmt->bindValue(":gameId", $achievement->gameId);
         $stmt->bindValue(":achievementId", $achievement->achievementId);
+        $stmt->bindValue(":isDisabled", $achievement->isDisabled);
 
         try {
             $stmt->execute();

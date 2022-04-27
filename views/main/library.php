@@ -71,11 +71,15 @@ if (!empty($chosenGame)) {
                             <h4><?= $achievement->achievementName ?></h4>
                             <h5><?= $achievement->description ?></h5>
                             <h4><?= $achievement->isDisabled ? "This achievement isn't available anymore" : "" ?></h4>
-                            <?php if(!$accountRepository->isAchievementAddedToAccount($achievement->achievementId, $_SESSION["Id"])) :?>
-                                <form action="./library.php?chosenGame=<?=$chosenGame?>" method="post">
-                                    <button type="submit" value="<?= $achievement->achievementId ?>" name="addAchievement">Add Achievement to Account</button>
-                                </form>
-                            <?php endif?>
+                            <?php if (!$achievement->isDisabled) : ?>
+                                <?php if (!$accountRepository->isAchievementAddedToAccount($achievement->achievementId, $_SESSION["Id"])) : ?>
+                                    <form action="./library.php?chosenGame=<?= $chosenGame ?>" method="post">
+                                        <button type="submit" value="<?= $achievement->achievementId ?>" name="addAchievement">Add Achievement to Account</button>
+                                    </form>
+                                <?php else : ?>
+                                    <h4>You already own this achievement</h4>
+                                <?php endif ?>
+                            <?php endif ?>
                         <?php endforeach ?>
                     </div>
 
