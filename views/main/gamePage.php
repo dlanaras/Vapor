@@ -52,7 +52,6 @@ $selectedGame = $gameRepository->getById($gameId);
                 </div>
             </div>
         </div>
-        <?php require_once("../../templates/footer.php") ?>
     </div>
 </body>
 

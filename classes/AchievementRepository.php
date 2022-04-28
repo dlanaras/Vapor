@@ -87,17 +87,4 @@ class AchievementRepository implements RepositoryInterface
             echo $e;
         }
     }
-
-    public function disable($achievementId)
-    {
-        $sql = "UPDATE game_tbl SET isDisabled = 1 WHERE Id = :achievementId";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":achievementId", $achievementId);
-
-        try {
-            $stmt->execute();
-        } catch (Exception $e) {
-            echo $e;
-        }
-    }
 }

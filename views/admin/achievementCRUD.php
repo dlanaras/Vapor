@@ -30,7 +30,7 @@ $chosenGame = htmlspecialchars($_GET['chosenGame']);
 
 $rowCounter = ((int) htmlspecialchars($_POST['rowCounter'])) - 1;
 
-if (!empty($rowCounter)) {
+if (isset($rowCounter)) {
     while ($rowCounter >= 0) {
         $name = htmlspecialchars($_POST["name$rowCounter"]);
         $description = htmlspecialchars($_POST["description$rowCounter"]);

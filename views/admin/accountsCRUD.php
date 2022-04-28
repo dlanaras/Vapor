@@ -30,7 +30,7 @@ $accountRepository = new AccountRepository(DbConnHandler::getConnection());
                     $banId = htmlspecialchars($_POST['banId']);
 
                     if (!empty($banId)) {
-                        $accountRepository->disable($banId);
+                        $accountRepository->ban($banId);
                     }
 
                     $ascendId = htmlspecialchars($_POST['ascendId']);

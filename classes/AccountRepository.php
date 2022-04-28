@@ -145,7 +145,7 @@ class AccountRepository implements RepositoryInterface
         }
     }
 
-    public function disable($accountId)
+    public function ban($accountId)
     { //We are really against cheaters, so every ban is not reversable.
         $sql = "UPDATE account_tbl SET isBanned = 1 WHERE Id = :accountId";
         $stmt = $this->db->prepare($sql);

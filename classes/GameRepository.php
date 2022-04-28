@@ -59,28 +59,16 @@ class GameRepository implements RepositoryInterface
 
     public function update($game)
     {
-        $sql = "UPDATE game_tbl SET name = :gameName, price = :price, thumbnail = :thumbnail, description = :description, releaseDate = :releaseDate, downloadLink = :downloadLink WHERE Id = :gameId";
+        $sql = "UPDATE game_tbl SET name = :gameName, price = :price, thumbnail = :thumbnail, description = :description, releaseDate = :releaseDate, downloadLink = :downloadLink, isDisabled = :isDisabled WHERE Id = :gameId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":gameName", $game->gameName);
         $stmt->bindValue(":price", $game->price);
         $stmt->bindValue(":thumbnail", $game->thumbnail);
         $stmt->bindValue(":description", $game->description);
         $stmt->bindValue(":releaseDate", $game->releaseDate);
+        $stmt->bindValue(":isDisabled", $game->isDisabled);
         $stmt->bindValue(":downloadLink", $game->downloadLink);
         $stmt->bindValue(":gameId", $game->gameId);
-        try {
-            $stmt->execute();
-        } catch (Exception $e) {
-            echo $e;
-        }
-    }
-
-    public function disable($gameId)
-    {
-        $sql = "UPDATE game_tbl SET isDisabled = 1 WHERE Id = :gameId";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(":gameId", $gameId);
-
         try {
             $stmt->execute();
         } catch (Exception $e) {

@@ -3,19 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 08:40 PM
+-- Generation Time: Apr 28, 2022 at 07:25 PM
 -- Server version: 10.5.13-MariaDB-log
 -- PHP Version: 8.0.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `DB_Vapor`
@@ -25,7 +19,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`pma`@`localhost` PROCEDURE `GetAchievementsFromAccount` (IN `AccountId` INT)  SELECT
+CREATE PROCEDURE `GetAchievementsFromAccount` (IN `AccountId` INT)  SELECT
     achievement_tbl.*
 FROM
     achievementsPerAccount_tbl
@@ -33,9 +27,9 @@ JOIN achievement_tbl ON achievement_tbl.Id = achievementsPerAccount_tbl.achievem
 WHERE
     achievementsPerAccount_tbl.account_Id = AccountId$$
 
-CREATE DEFINER=`pma`@`localhost` PROCEDURE `GetAchievementsFromGame` (IN `GameId` INT)  Select * FROM achievement_tbl where game_id = GameId$$
+CREATE PROCEDURE `GetAchievementsFromGame` (IN `GameId` INT)  Select * FROM achievement_tbl where game_id = GameId$$
 
-CREATE DEFINER=`pma`@`localhost` PROCEDURE `GetGamesFromAccount` (IN `AccountId` INT)  SELECT game_tbl.* FROM gamesPerAccount_tbl JOIN game_tbl ON game_tbl.Id = gamesPerAccount_tbl.game_Id WHERE gamesPerAccount_tbl.account_Id = AccountId$$
+CREATE PROCEDURE `GetGamesFromAccount` (IN `AccountId` INT)  SELECT game_tbl.* FROM gamesPerAccount_tbl JOIN game_tbl ON game_tbl.Id = gamesPerAccount_tbl.game_Id WHERE gamesPerAccount_tbl.account_Id = AccountId$$
 
 DELIMITER ;
 
@@ -83,6 +77,8 @@ CREATE TABLE `achievementsPerAccount_tbl` (
 --
 
 INSERT INTO `achievementsPerAccount_tbl` (`account_Id`, `achievement_Id`) VALUES
+(1, 1),
+(1, 2),
 (3, 1),
 (4, 1);
 
@@ -106,7 +102,9 @@ CREATE TABLE `achievement_tbl` (
 --
 
 INSERT INTO `achievement_tbl` (`Id`, `name`, `description`, `thumbnail`, `game_Id`, `isDisabled`) VALUES
-(1, 'play as spee', 'you are must play as spee to get this', 'spee_thumbnail.jpg', 3, 0);
+(1, 'play as spee', 'you are must play as spee to get this', 'spee_thumbnail.jpg', 3, 0),
+(2, 'peeros', 'play as peeros', 'peero_thumbnail.jpg', 3, 1),
+(8, 'onoi', 'onio', 'onnion.jpg', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -155,7 +153,8 @@ CREATE TABLE `game_tbl` (
 
 INSERT INTO `game_tbl` (`Id`, `name`, `price`, `thumbnail`, `description`, `releaseDate`, `isDisabled`, `downloadLink`) VALUES
 (1, 'dora 2', 0, 'dora2_thumbnail.jpg', 'Cool game', '2022-04-18', 0, 'https://www.youtube.com/watch?v=VjGSMUep6_4'),
-(3, 'team fortnight 2', 0, 'tf2_thumbnail.jpg', 'best game for fortnights', '2022-04-05', 0, 'https://www.merriam-webster.com/dictionary/fortnight');
+(3, 'team fortnight 2', 40, 'tf2_thumbnail.jpg', 'best game for fortnights', '2022-04-05', 0, 'https://www.merriam-webster.com/dictionary/fortnight'),
+(5, 'CS:COME', 200, 'cscome.jpg', 'Counter Strike: Cannot Outrun Musk Elon', '2022-04-04', 0, 'https://www.twitter.com');
 
 --
 -- Indexes for dumped tables
@@ -211,13 +210,13 @@ ALTER TABLE `account_tbl`
 -- AUTO_INCREMENT for table `achievement_tbl`
 --
 ALTER TABLE `achievement_tbl`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `game_tbl`
 --
 ALTER TABLE `game_tbl`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -243,7 +242,3 @@ ALTER TABLE `gamesPerAccount_tbl`
   ADD CONSTRAINT `account_game_Id_Idx` FOREIGN KEY (`account_Id`) REFERENCES `account_tbl` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `game_game_Id_Idx` FOREIGN KEY (`game_Id`) REFERENCES `game_tbl` (`Id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
