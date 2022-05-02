@@ -1,0 +1,2 @@
+insert into achievement_tbl (Id, name, description, isDisabled, thumbnail, game_Id) values (1, 'commodo placerat', 'Other age-related incipient cataract, bilateral', false, 'PosuereCubiliaCurae.tiff', 1);
+insert into achievement_tbl (Id, name, description, isDisabled, thumbnail, game_Id) values (2, 'ligula vehicula consequat', 'Other neurofibromatosis', true, 'Amet.jpeg', 2);

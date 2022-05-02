@@ -1,0 +1,2 @@
+insert into account_tbl (Id, username, firstName, lastName, Email, isAdmin, biography, isBanned, password) values (1, 'kstlouis0', 'Katheryn', 'St Louis', 'kstlouis0@stumbleupon.com', false, 'Ext fistulizat esoph NEC', true, '0EKQ52QsSaZ');
+insert into account_tbl (Id, username, firstName, lastName, Email, isAdmin, biography, isBanned, password) values (2, 'fgard1', 'Fidelia', 'Gard', 'fgard1@cnn.com', false, 'Opn abltn liver les/tiss', false, 'gKz9neANx90j');

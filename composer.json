@@ -5,7 +5,7 @@
     "license": "版權所有 © 2007 自由軟體基金會",
     "autoload": {
         "classmap": [
-            "src/"
+            "./tests"
         ]
     },
     "require-dev": {

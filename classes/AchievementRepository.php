@@ -1,11 +1,11 @@
 <?php
-require_once("DbConnHandler.php");
-require_once("Repository.php");
-require_once("../../models/Achievement.class.php");
+require_once(__DIR__ . "/DbConnHandler.php");
+require_once(__DIR__ . "/Repository.php");
+require_once(__DIR__ . "/../models/Achievement.class.php");
 
 class AchievementRepository implements RepositoryInterface
 {
-    protected $db;
+    public $db;
 
     public function __construct()
     {

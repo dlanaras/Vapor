@@ -2,7 +2,7 @@
 
 class DbConnHandler {
     static function getConnection() {
-        $configArray = require "../../config.php";
+        $configArray = require __DIR__ . "/../config.php";
 
         $dbHost = $configArray['host'];
         $dbName = $configArray['name'];

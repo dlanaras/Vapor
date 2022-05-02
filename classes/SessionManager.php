@@ -1,5 +1,5 @@
 <?php
-include_once("DbConnHandler.php");
+include_once(__DIR__ . "/DbConnHandler.php");
 session_start();
 
 class SessionManager {

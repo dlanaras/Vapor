@@ -2,14 +2,14 @@
 
 use phpDocumentor\Reflection\Types\Boolean;
 
-require_once("DbConnHandler.php");
-require_once("Repository.php");
-require_once("../../models/Account.class.php");
-require_once("SessionManager.php");
+require_once(__DIR__ . "/DbConnHandler.php");
+require_once(__DIR__ . "/Repository.php");
+require_once(__DIR__ . "/../models/Account.class.php");
+require_once(__DIR__ . "/SessionManager.php");
 
 class AccountRepository implements RepositoryInterface
 {
-    protected $db;
+    public $db;
 
     public function __construct()
     {
@@ -37,7 +37,7 @@ class AccountRepository implements RepositoryInterface
         $stmt->bindValue(":accountId", $accountId);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $account = new Account($result["password"], $result['account_tbl.Id'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
+        $account = new Account($result["password"], $result['Id'], $result['username'], $result['firstName'], $result['lastName'], $result['isAdmin'], $result['biography'], $result["Email"], $result["isBanned"]);
 
         return $account;
     }
