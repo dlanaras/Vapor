@@ -41,7 +41,7 @@ if (!empty($searchTerm)) {
         <div class="content-body">
             <form action="./index.php" action="get">
                 <input type="text" name="searchTerm" value="<?= is_null($searchTerm) ? "" : $searchTerm ?>">
-                <input type="submit" value="Search By Name">
+                <input type="submit" value="Search By Name" class="notrealinput">
             </form>
             <br>
             <div class="flex-games">
