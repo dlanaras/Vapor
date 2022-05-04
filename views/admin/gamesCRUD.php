@@ -86,8 +86,8 @@ if (isset($_POST['addGame']) && isset($_FILES['addThumb']) && !empty($addName) &
                 $pageSize = 10;
             }
             ?>
-            <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>">
-            <input type="submit" value="Change Page Size">
+            <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>" class="notrealinput">
+            <input type="submit" value="Change Page Size" class="notrealinput">
             <?php
 
             $pageSize = (int)$pageSize;
@@ -100,7 +100,7 @@ if (isset($_POST['addGame']) && isset($_FILES['addThumb']) && !empty($addName) &
         </form>
         <form action="./gamesCRUD.php" method="get">
             <input type="text" name="searchTerm" value="<?= is_null($searchTerm) ? "" : $searchTerm ?>">
-            <input type="submit" value="Search By Name">
+            <input type="submit" value="Search By Name" class="notrealinput">
         </form>
         <br>
         <form action="./gamesCRUD.php" method="post">

@@ -64,12 +64,12 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
     <div class="content-body">
         <?php if (empty($chosenGame)) : ?>
             <form action="./achievementCRUD.php" method="get">
-                <select name="chosenGame">
+                <select name="chosenGame" class="notrealinput">
                     <?php foreach ($gameNamesToIds as $id => $gameName) : ?>
                         <option value="<?= $id ?>"><?= $gameName ?></option>
                     <?php endforeach ?>
                 </select>
-                <input type="submit" value="Select Game">
+                <input type="submit" value="Select Game" class="notrealinput">
             </form>
         <?php else : ?>
             <form action="./achievementCRUD.php" method="get">
@@ -100,8 +100,8 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
                 }
                 ?>
                 <input type="hidden" name="chosenGame" value="<?= $chosenGame ?>">
-                <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>">
-                <input type="submit" value="Change Page Size">
+                <input type="number" min="1" max="100" name="pageSize" value="<?= $pageSize ?>" class="notrealinput">
+                <input type="submit" value="Change Page Size" class="notrealinput">
                 <?php
 
                 $pageSize = (int)$pageSize;
@@ -113,9 +113,9 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
                 <?php endfor ?>
             </form>
             <form action="./achievementCRUD.php" method="get">
-                    <input type="text" name="searchTerm" value="<?= is_null($searchTerm) ? "" : $searchTerm ?>">
+                    <input type="text" name="searchTerm" value="<?= is_null($searchTerm) ? "" : $searchTerm ?>" class="notrealinput">
                     <input type="hidden" value="<?= $chosenGame ?>" name="chosenGame">
-                    <input type="submit" value="Search By Name">
+                    <input type="submit" value="Search By Name" class="notrealinput">
                 </form>
             <form action="./achievementCRUD.php" method="post">
                 <br>
@@ -155,7 +155,7 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
                 </table>
                 <input type="hidden" name="rowCounter" value="<?= count($achievementsonPage) ?>">
                 <br>
-                <input type="submit" value="Update Achievements">
+                <input type="submit" value="Update Achievements" class="notrealinput">
             </form>
             <br>
             <br>
@@ -178,7 +178,7 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
                             <input type="file" name="addThumb" required>
                         </td>
                         <td>
-                            <select name="addGame">
+                            <select name="addGame" class="notrealinput">
                                 <?php foreach ($gameNamesToIds as $id => $gameName) : ?>
                                     <option value="<?= $id ?>"><?= $gameName ?></option>
                                 <?php endforeach ?>
@@ -191,10 +191,10 @@ if (isset($_POST['addAchievement']) && isset($_FILES['addThumb']) && !empty($add
             <br>
             <form action="./achievementCRUD.php" action="get">
                 <input type="hidden" value="<?= $chosenGame ?>" name="chosenGame">
-                <input type="submit" value="Reset">
+                <input type="submit" value="Reset"  class="notrealinput">
             </form>
             <form action="./achievementCRUD.php" action="get">
-                <input type="submit" value="Go Back">
+                <input type="submit" value="Go Back" class="notrealinput">
             </form>
         <?php endif ?>
     </div>

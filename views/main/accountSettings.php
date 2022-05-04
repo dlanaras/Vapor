@@ -85,7 +85,7 @@ require_once("../../templates/mustBeLogedIn.php");
                 </label>
                 <div>
                     <button type="button" onclick="window.location = '/'">Cancel</button>
-                    <input type="submit" value="Save Changes">
+                    <input type="submit" value="Save Changes"  class="notrealinput">
                 </div>
             </form>
         </div>
