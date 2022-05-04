@@ -9,10 +9,11 @@ require_once "../../classes/SessionManager.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../styles/style.css">
     <title>Vapor</title>
 </head>
 
-<body>
+<body style="padding-top: 260px; padding-left: 37%">
     <?php
     if (SessionManager::isLoggedIn()) {
         SessionManager::redir("../main/index.php");
@@ -20,17 +21,17 @@ require_once "../../classes/SessionManager.php";
     ?>
 
     <form action="./register.php" method="post">
-        Firstname
-        <input type="text" name="firstName" required>
-        Lastname
-        <input type="text" name="lastName" required>
-        E-Mail
-        <input type="email" name="email" required>
-        Username
-        <input type="text" name="dbuser" minlength="3" required>
-        Password
-        <input type="password" name="password" required>
-        <input type="submit">
+        <p>Firstname</p>
+        <input type="text" name="firstName" required><br>
+        <p>Lastname</p>
+        <input type="text" name="lastName" required><br>
+        <p>E-Mail</p>
+        <input type="email" name="email" required><br>
+        <p>Username</p>
+        <input type="text" name="dbuser" minlength="3" required><br>
+        <p>Password</p>
+        <input type="password" name="password" required><br>
+        <input type="submit" class="notrealinput">
     </form>
 
     <button onclick="window.location = './login.php'">
@@ -49,4 +50,4 @@ require_once "../../classes/SessionManager.php";
         SessionManager::redir("../main/index.php");
     }
     ?>
-</body>
+</>
