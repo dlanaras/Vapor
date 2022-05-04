@@ -14,6 +14,7 @@ h4,
 h5,
 h6 {
     margin: 0;
+    color: lightgrey;
 }
 
 .content-header {
@@ -39,8 +40,9 @@ body {
 }
 
 html {
-    background-image: url("../resources/gaben.jpg");
+    background-image: url("../resources/vapor_logo_banner_stars.png");
     background-size: cover;
+    background-color: black;
 }
 
 .pageSelected {
@@ -63,6 +65,7 @@ html {
 
 .godsTable * {
     position: relative;
+    width: -webkit-fill-available;
 }
 
 .godsTable tbody tr {
@@ -82,6 +85,22 @@ html {
     background-color: #2b263b;
     color: rgb(179, 176, 171);
     border: black 2px solid;
+    width: auto;
+    border-radius: 7px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.godsTable tbody tr button:not(:hover) {
+    animation-name: btnNotHvr;
+    animation-duration: 1s;
+}
+
+.godsTable tbody tr button:hover {
+    animation-name: btnHvr;
+    animation-duration: 1s;
+    background: lightgrey;
+    color: #2b263b;
 }
 
 .godsTable tbody th {
@@ -110,6 +129,19 @@ html {
     background-color: #2b263b;
     color: rgb(179, 176, 171);
     border: black 2px solid;
+    border-radius: 7px;
+}
+
+.centerAddAccount:not(:hover) {
+    animation-name: btnNotHvr;
+    animation-duration: 1s;
+}
+
+.centerAddAccount:hover {
+    animation-name: btnHvr;
+    animation-duration: 1s;
+    background: lightgrey;
+    color: #2b263b;
 }
 
 .formSeperateMiddle {
@@ -193,4 +225,81 @@ html {
     text-align: center;
     color: white;
     font-size: 70px;
+}
+
+
+.notrealinput{
+    position: relative;
+    background-color: #2b263b;
+    color: rgb(179, 176, 171);
+    border: black 2px solid;
+    border-radius: 7px;
+}
+
+
+.notrealinput:not(:hover) {
+    animation-name: btnNotHvr;
+    animation-duration: 1s;
+}
+
+.notrealinput:hover {
+    animation-name: btnHvr;
+    animation-duration: 1s;
+    background: lightgrey;
+    color: #2b263b;
+}
+
+button {
+    background-color: #2b263b;
+    color: rgb(179, 176, 171);
+    border: black 2px solid;
+    width: auto;
+    border-radius: 7px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+button:not(:hover) {
+    animation-name: btnNotHvr;
+    animation-duration: 1s;
+}
+
+button:hover {
+    animation-name: btnHvr;
+    animation-duration: 1s;
+    background: lightgrey;
+    color: #2b263b;
+}
+
+p {
+    color: lightgrey;
+}
+
+dt, dd {
+    color: lightgrey;
+}
+
+@keyframes btnNotHvr {
+    0%{
+        background: lightgrey;
+    }
+    99% {
+        background: #2b263b;
+    }
+    100%{
+        color:lightgrey;
+    }
+}
+
+
+@keyframes btnHvr {
+    0%{
+        background: #2b263b;
+    }
+    99% {
+        background: lightgrey;
+    }
+    100%{
+        color:#2b263b;
+    }
 }
