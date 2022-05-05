@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+body{
+    background-color:#1f90ec;
+}
+.pool{
+    width:50em;
+    margin-left: auto;
+    margin-right: auto;
+}
+#Person{
+    animation: rotate 60s linear infinite;
+    transform-origin: 200px center;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#flower1{
+    animation: pulse 5s infinite;}
+
+@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.03);}
+    100% {transform: scale(1);}
+}
+
+#flower2{
+    animation: pulse2 4s infinite;}
+
+@keyframes pulse2 {
+    0% {transform: scale(1);}
+    60% {transform: scale(1.03);}
+    100% {transform: scale(1);}
+}
+
+#flower3{
+    animation: pulse 6s infinite;}
+#duck{
+    animation: rotateduck 10s linear infinite;
+    transform-origin: 200px center;
+}
+@keyframes rotateduck {
+    0% { transform: rotate(0);
+    }
+    50% {
+        transform: rotate(-10deg);
+    }
+    100% { transform: rotate(0);
+    }
+}
