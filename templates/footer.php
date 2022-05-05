@@ -1,9 +1,4 @@
 <div class="content-footer">
-    <table>
-        <tr>
-            <td>
-                <a href="/views/main/index.php">Enter Links Here</a>
-            </td>
-        </tr>
-    </table>
+    <p>Copy Wrong Vapor</p>
+    <p><?=date("d-M-Y");?></p>
 </div>

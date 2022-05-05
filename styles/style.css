@@ -28,6 +28,13 @@ h6 {
     flex-grow: 1;
 }
 
+.makeFlex {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
 body {
     margin-left: 2%;
     margin-right: 2%;
@@ -36,18 +43,19 @@ body {
 .content-footer {
     position: absolute;
     bottom: 0;
-    margin: 0 50%;
+    width: 100%;
+    text-align: center;
+    opacity: 0.4;
+    font-size: 0.8rem;
 }
 
 html {
-    background-image: url("../resources/vapor_logo_banner_stars.png");
     background-size: cover;
     background-color: black;
 }
 
 .centerInput {
-    margin-left: 25%;
-    margin-right: 25%;
+    align-items: center;
 }
 
 .pageSelected {
@@ -173,7 +181,7 @@ html {
     color: white;
 }
 
-.library > div {
+.library>div {
     width: 80%;
     height: 900px;
     background-color: #2b263b;
@@ -202,7 +210,7 @@ html {
 .flex-games-element button {
     position: relative;
     left: 0;
-    top:0;
+    top: 0;
 }
 
 .reload-button {
@@ -233,7 +241,7 @@ html {
 }
 
 
-.notrealinput{
+.notrealinput {
     position: relative;
     background-color: #2b263b;
     color: rgb(179, 176, 171);
@@ -280,31 +288,139 @@ p {
     color: lightgrey;
 }
 
-dt, dd {
+dt,
+dd {
     color: lightgrey;
 }
 
 @keyframes btnNotHvr {
-    0%{
+    0% {
         background: lightgrey;
     }
+
     99% {
         background: #2b263b;
     }
-    100%{
-        color:lightgrey;
+
+    100% {
+        color: lightgrey;
     }
 }
 
 
 @keyframes btnHvr {
-    0%{
+    0% {
         background: #2b263b;
     }
+
     99% {
         background: lightgrey;
     }
-    100%{
-        color:#2b263b;
+
+    100% {
+        color: #2b263b;
+    }
+}
+
+.bg-animation-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.bg-animation-box li {
+    position: fixed;
+    display: block;
+    list-style: none;
+    width: 25px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: bg-animate-01 20s linear infinite;
+    bottom: -150px;
+}
+
+.bg-animation-box li.circle-box {
+    border-radius: 50%;
+}
+
+.bg-animation-box li.corners-box-20 {
+    border-radius: 20%;
+}
+
+.bg-animation-box li.corners-box-35 {
+    border-radius: 35%;
+}
+
+.bg-animation-box li:nth-child(1) {
+    left: 4%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.bg-animation-box li:nth-child(2) {
+    left: 12%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 1.5s;
+    animation-duration: 10s;
+}
+
+.bg-animation-box li:nth-child(3) {
+    left: 18%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 5.5s;
+}
+
+.bg-animation-box li:nth-child(4) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 15s;
+}
+
+.bg-animation-box li:nth-child(5) {
+    left: 43%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 0s;
+}
+
+.bg-animation-box li:nth-child(6) {
+    left: 60%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3.5s;
+}
+
+.bg-animation-box li:nth-child(7) {
+    left: 70%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 6.5s;
+}
+
+.bg-animation-box li:nth-child(8) {
+    left: 95%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 1.5s;
+}
+
+@keyframes bg-animate-01 {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-800px) rotate(360deg);
+        opacity: 0;
     }
 }

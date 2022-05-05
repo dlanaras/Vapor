@@ -23,5 +23,17 @@ $accountRepository = new AccountRepository();
             window.open('https://github.com/Sorry4Nothing/Vapor/releases', '_blank');
         }
     </script>
+    <div class="bg-animation">    
+    <ul class="bg-animation-box">
+      <li class="circle-box"></li>
+            <li class="corners-box-20"></li>
+            <li class="circle-box"></li>
+            <li class="corners-box-20"></li>
+            <li></li>
+            <li class="corners-box-35"></li>
+            <li class="circle-box"></li>
+      <li></li>   
+        </ul>
+    </div>
 </div>
 <br>
