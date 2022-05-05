@@ -19,14 +19,15 @@ require_once "../../classes/SessionManager.php";
     }
 ?>
 
-<form action="./login.php" method="post">
-            Username
+<form action="./login.php" method="post" class="flex-grow">
+            <p>Username</p>
             <input type="text" name="dbuser" >
-            Password
+            <p>Password</p>
             <input type="password" name="password" >
-        <input type="submit" class="notrealinput">
+            <br>
+        <input type="submit" class="notrealinput centerInput" value="Login">
 </form>
-
+<br>
 <button onclick="window.location = './register.php'">
     Escape
 </button>

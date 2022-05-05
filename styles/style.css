@@ -45,6 +45,11 @@ html {
     background-color: black;
 }
 
+.centerInput {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
 .pageSelected {
     color: white;
     background-color: rgb(36, 33, 33);
