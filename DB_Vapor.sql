@@ -9,11 +9,15 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
+
+CREATE SCHEMA IF NOT EXISTS `DB_Vapor` DEFAULT CHARACTER SET utf8 ;
+USE `DB_Vapor` ;
 SET time_zone = "+00:00";
 
 --
 -- Database: `DB_Vapor`
 --
+
 
 DELIMITER $$
 --
