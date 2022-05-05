@@ -15,7 +15,7 @@ require_once "../../classes/SessionManager.php";
 
 <?php
     if(SessionManager::isLoggedIn()) {
-        SessionManager::redir("../main/index.php");
+        SessionManager::redir("../main/home.php");
     }
 ?>
 
@@ -41,7 +41,7 @@ require_once "../../classes/SessionManager.php";
     
     if (!empty($dbUser) && !empty($dbPassword)) {
         SessionManager::login($dbUser, $dbPassword);
-        SessionManager::redir("../main/index.php");
+        SessionManager::redir("../main/home.php");
     }
 ?>
 </body>

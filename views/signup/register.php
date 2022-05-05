@@ -16,7 +16,7 @@ require_once "../../classes/SessionManager.php";
 <body style="padding-top: 260px; padding-left: 37%">
     <?php
     if (SessionManager::isLoggedIn()) {
-        SessionManager::redir("../main/index.php");
+        SessionManager::redir("../main/home.php");
     }
     ?>
 
@@ -47,7 +47,7 @@ require_once "../../classes/SessionManager.php";
 
     if (!empty($dbUser) && !empty($dbPassword) && strlen($dbPassword) > 2 && !empty($dbFirstName) && !empty($dbLastName) && !empty($dbEmail)) {
         SessionManager::register($dbUser, $dbPassword, $dbFirstName, $dbLastName, $dbEmail);
-        SessionManager::redir("../main/index.php");
+        SessionManager::redir("../main/home.php");
     }
     ?>
 </>

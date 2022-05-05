@@ -14,7 +14,7 @@
   <img src="../../resources/moon.png" id="moon">
   <img src="../../resources/mountains_behind.png" id="mountains_behind">
   <h2 id="text">Vapor</h2>
-  <a href="#sec" id="btn">Explore</a>
+  <a href="./index.php" id="btn">Explore Games</a>
   <img src="../../resources/mountains_front.png" id="mountains_front">
 </section>
 

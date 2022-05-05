@@ -1,8 +1,8 @@
 <?php
 return array(
     "host" => "localhost",
-    "name" => "db_vapor",
-    "username" => "root",
-    "pass" => "root"
+    "name" => "DB_Vapor",
+    "username" => "pma",
+    "pass" => "pmapass"
 )
 ?>
