@@ -99,6 +99,17 @@ class AccountRepository implements RepositoryInterface
 
     public function update($account)
     {
+        // check if account name already exists as to avoid non admin users changing to an admin user or just generally changing to an existing account
+        $sql = "SELECT * FROM account_tbl WHERE username = :username AND Id != :accountId";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":username", $account->userName);
+        $stmt->bindValue(":accountId", $account->accountId);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            throw new Exception("Username already exists");
+        }
+
         $sql = "UPDATE account_tbl SET username = :username, firstName = :firstName, lastName = :lastName, biography = :biography, Email = :email WHERE Id = :accountId";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":firstName", $account->firstName);
