@@ -45,9 +45,15 @@ require_once "../../classes/SessionManager.php";
     $dbLastName = htmlspecialchars($_POST['lastName']);
     $dbEmail = htmlspecialchars($_POST['email']);
 
-    if (!empty($dbUser) && !empty($dbPassword) && strlen($dbPassword) > 2 && !empty($dbFirstName) && !empty($dbLastName) && !empty($dbEmail)) {
+
+    if (!empty($dbUser) && !empty($dbPassword) && passwordMeetsCriteria($dbPassword) && !empty($dbFirstName) && !empty($dbLastName) && !empty($dbEmail)) {
         SessionManager::register($dbUser, $dbPassword, $dbFirstName, $dbLastName, $dbEmail);
         SessionManager::redir("../main/home.php");
+    }
+
+    // check that password is at least 8 chars long and has at least one number
+    function passwordMeetsCriteria(string $password): bool {
+        return strlen($password) >= 8 && preg_match("#[0-9]+#", $password);
     }
     ?>
 </>
